@@ -111,7 +111,7 @@ describe('GameWatcher', () => {
             expect(watcher.getGameMode()).toEqual('UNKNOWN');
         });
 
-        it('returns HIDDEN on a hidden melee', () => {
+        it('returns HIDDEN on a 隠れ乱闘', () => {
             adapter.registerMockByXPath(gameModeXPath, newMockElementHasInnerHTML('隠れ乱闘'));
             expect(watcher.getGameMode()).toEqual('HIDDEN');
         });
