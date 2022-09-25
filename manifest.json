@@ -1,0 +1,14 @@
+{
+    "name": "ゴッドフィールド戦績管理",
+    "description": "ゴッドフィールド戦績管理",
+    "version": "0.1",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [{
+        "matches": ["https://godfield.net/*"],
+        "js": ["senseki.js"]
+    }],
+    "permissions": ["activeTab", "scripting"]
+}
