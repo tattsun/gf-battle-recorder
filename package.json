@@ -4,7 +4,8 @@
   "description": "",
   "main": "senseki.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "package": "zip gf-battle-recorder.zip senseki.js manifest.json"
   },
   "repository": {
     "type": "git",
