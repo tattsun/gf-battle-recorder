@@ -21,6 +21,7 @@ class BrowserAdapterMock {
 
 describe('GameWatcher', () => {
     const nameInputXPath = '//*[@id="main"]/div/div[3]/div[6]/input';
+    const winXPath = '//*[@id="main"]/div/div[3]/div[3]/div[3]/div[1]/span';
 
     let adapter;
     let watcher;
@@ -41,13 +42,13 @@ describe('GameWatcher', () => {
                     value: newValue,
                 },
             })),
-        }
+        };
     }
 
     function newMockElementHasInnerHTML(innerHTML) {
         return {
             innerHTML,
-        }
+        };
     }
 
     describe('getPlayerName()', () => {
@@ -70,7 +71,7 @@ describe('GameWatcher', () => {
         });
 
         it('can detect value change', () => {
-            const elem = newMockElementHasValue('initial name') ;
+            const elem = newMockElementHasValue('initial name');
             adapter.registerMockByXPath(nameInputXPath, elem);
             watcher.setHook();
 
@@ -95,7 +96,7 @@ describe('GameWatcher', () => {
         });
     });
 
-    describe('getGameMode', () => {
+    describe('getGameMode()', () => {
         const gameModeXPath = '//*[@id="main"]/div/div[1]/span';
 
         beforeEach(() => {
@@ -114,6 +115,22 @@ describe('GameWatcher', () => {
         it('returns HIDDEN on a 隠れ乱闘', () => {
             adapter.registerMockByXPath(gameModeXPath, newMockElementHasInnerHTML('隠れ乱闘'));
             expect(watcher.getGameMode()).toEqual('HIDDEN');
+        });
+    });
+
+    describe('getGameStatus()', () => {
+        it('returns PLAYING on playing', () => {
+            expect(watcher.getGameStatus()).toEqual('PLAYING');
+        });
+
+        it('returns FINISHED on game finished', () => {
+            adapter.registerMockByXPath(winXPath, newMockElementHasInnerHTML('勝利'));
+            expect(watcher.getGameStatus()).toEqual('FINISHED');
+        });
+
+        it('throws error when unknown element is found', () => {
+            adapter.registerMockByXPath(winXPath, newMockElementHasInnerHTML('aaa'));
+            expect(watcher.getGameStatus()).toEqual('UNKNOWN');
         });
     });
 });
